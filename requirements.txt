@@ -1,0 +1,5 @@
+stockfish
+tensorflow
+Pillow
+pyautogui
+beautifulsoup4
