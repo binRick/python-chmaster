@@ -1,11 +1,23 @@
 #!/usr/bin/env python3
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import time
+import time, json
 
 hostName = "localhost"
-serverPort = 8080
+serverPort = 4912
 
 class MyServer(BaseHTTPRequestHandler):
+    def do_POST(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        print("posted")
+        self.data_string = self.rfile.read(int(self.headers['Content-Length']))
+        try:
+          data = json.loads(self.data_string)
+          print(data)
+        except:
+          return
+
     def do_GET(self):
         self.send_response(200)
         self.send_header("Content-type", "text/html")

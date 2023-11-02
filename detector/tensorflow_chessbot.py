@@ -177,7 +177,7 @@ def main(args):
     #print("Certainty range [%g - %g], Avg: %g" % (
     #tile_certainties.min(), tile_certainties.max(), tile_certainties.mean()))
     active = args.active
-    print("---\nPredicted FEN:\n%s %s - - 0 1" % (short_fen, active))
+    print("%s %s - - 0 1" % (short_fen, active))
     #print("Final Certainty: %.1f%%" % (certainty*100))
 
 if __name__ == '__main__':
