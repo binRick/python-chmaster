@@ -8,16 +8,14 @@
 // @grant        GM.xmlHttpRequest
 // @run-at document-start
 // ==/UserScript==
+
 var scriptString = (function () {
+    const url = "http://localhost:4912/api";
     window.WebSocket = class extends window.WebSocket {
         constructor(url, proto){
             super(url, proto);
             this.addEventListener('message', event => {
                 console.log('INCOMING....:::', event.data);
-
-                var url = "http://localhost:4912/api";
-                var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
-
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url);
                 xhr.send(event.data);
