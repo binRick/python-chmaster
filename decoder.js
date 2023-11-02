@@ -14,8 +14,12 @@ var decodeMove = function(move) {
 	console.log('p2:', p2);
         var remainder1 = p1 % 8;
         var remainder2 = p2 % 8;
+	console.log('remainder1:', remainder1);
+	console.log('remainder2:', remainder2);
         var quotient1 = parseInt(p1 / 8);
         var quotient2 = parseInt(p2 / 8);
+	console.log('quotient1:', quotient1);
+	console.log('quotient2:', quotient2);
         var movePosition_START_X = letters[remainder1];
         var movePosition_START_Y = quotient1 + 1;
         var movePosition_END_X = letters[remainder2];
@@ -24,5 +28,6 @@ var decodeMove = function(move) {
 	console.log('pos:', pos);
     };
 
-decodeMove('nD');
-decodeMove('ZJ');
+//decodeMove('nD');
+//decodeMove('ZJ');
+decodeMove('ow');

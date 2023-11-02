@@ -1,2 +1,6 @@
 .v
 *.swp
+node_modules
+*.png
+__pycache__
+*.json

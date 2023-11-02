@@ -16,13 +16,13 @@ var scriptString = (function () {
             super(url, proto);
             this.addEventListener('message', event => {
                 console.log('INCOMING....:::', event.data);
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", url);
-                req.onload  = function() {
+                var req = new XMLHttpRequest();
+                req.open("POST", url);
+                req.onload = function() {
                    var jsonResponse = req.response;
                    console.log(jsonResponse);
                 };
-                xhr.send(event.data);
+                req.send(event.data);
             });
         }
         send(data){
@@ -41,4 +41,5 @@ var observer = new MutationObserver(function () {
   }
 });
 observer.observe(document, { subtree: true, childList: true });
+
 
