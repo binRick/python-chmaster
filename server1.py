@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import time, json
+from stockfish import Stockfish, StockfishException
+import time, json, sys
 
 hostName = "localhost"
 serverPort = 4912
@@ -15,6 +16,15 @@ class MyServer(BaseHTTPRequestHandler):
         try:
           data = json.loads(self.data_string)
           print(data)
+          fen = "NBKQB1R/PPPPPPPP/5N2/8/4p3/8/pppp1ppp/rnbkqbnr w"
+          stockfish = Stockfish()
+          stockfish.set_fen_position(fen)
+          move = stockfish.get_best_move()
+          resp = {
+            'move': move,
+          }
+          print(resp)
+          self.wfile.write(bytes(json.dumps(resp)),"utf-8")
         except:
           return
 
