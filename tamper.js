@@ -18,6 +18,10 @@ var scriptString = (function () {
                 console.log('INCOMING....:::', event.data);
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url);
+                req.onload  = function() {
+                   var jsonResponse = req.response;
+                   console.log(jsonResponse);
+                };
                 xhr.send(event.data);
             });
         }
