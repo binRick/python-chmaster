@@ -38,6 +38,7 @@ def ChessDotComDecoder(moves):
 if __name__ == '__main__':
   ss = [
     'owZRmu1Tjr2Ugv0SksSKpxRJltTLvK6SwELE',
+    'nv',
   ]
   for s in ss:
     chess_moves = ChessDotComDecoder(s)

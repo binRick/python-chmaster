@@ -10,20 +10,33 @@
 // ==/UserScript==
 
 var scriptString = (function () {
-    const url = "http://localhost:4912/api";
     window.WebSocket = class extends window.WebSocket {
         constructor(url, proto){
             super(url, proto);
             this.addEventListener('message', event => {
-                console.log('INCOMING....:::', event.data);
-                var req = new XMLHttpRequest();
-                req.open("POST", url);
+                if(!event.data.includes('"moves"')){
+                    console.log(event.data);
+                  //  console.log("not sending data");
+                }else{
+                    const url = "http://localhost:4912/api";
+
+                    //console.log('INCOMING....:::', event.data);
+                                        console.log("opening", url);
+
+                    var req = new XMLHttpRequest();
+                    req.open("POST", url);
+
                 req.onload = function() {
                    var jsonResponse = req.response;
-                   console.log(jsonResponse);
+                   console.log('response:', jsonResponse);
+                   var j = JSON.parse(req.response);
+                   var move = j.move;
+                    console.log('Making move:', move);
                 };
-                req.send(event.data);
-            });
+
+                    req.send(event.data);
+                }
+             });
         }
         send(data){
             super.send(data);

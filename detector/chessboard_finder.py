@@ -16,7 +16,7 @@
 import numpy as np
 # sudo apt-get install libopenjp2-7 libtiff5
 import PIL.Image
-import argparse
+import argparse, sys
 from time import time
 from helper_image_loading import *
 
@@ -340,6 +340,7 @@ def findGrayscaleTilesInImage(img):
   
   # Use computer vision to find orthorectified chessboard corners in image
   corners = findChessboardCorners(img_arr)
+  sys.stderr.write(f'corners: {corners}\n')
   if corners is None:
     return None, None
 
