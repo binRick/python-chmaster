@@ -14,6 +14,8 @@ if not os.path.isdir(LOG_DIR):
 
 class MyServer(BaseHTTPRequestHandler):
     sf = Stockfish()
+    elo = 1500
+    moves_qty = 5
     def do_POST(self):
         self.send_response(200)
         self.send_header("Content-type", "application/json")
@@ -42,11 +44,24 @@ class MyServer(BaseHTTPRequestHandler):
 
             print(f'{player} / {opponent} :: #{seq} :: Moves: {moves} :: {decoded_moves}')
             self.sf.set_position(decoded_moves)
+            self.sf.set_elo_rating(self.elo)
             move = self.sf.get_best_move()
             print(f'best move: {move}')
+            ev = self.sf.get_evaluation()
+            moves = self.sf.get_top_moves(self.moves_qty)
+            wdl = self.sf.get_wdl_stats()
+            params = self.sf.get_parameters()
+            ver = self.sf.get_stockfish_major_version()
             resp = {
               'move': move,
+              'evaluation': ev,
+              'elo': self.elo,
+              'moves': moves,
+              'wdl': wdl,
+              'params': params,
+              'ver': ver,
             }
+            '''response: {"move": "d2d4", "evaluation": {"type": "cp", "value": -60}, "elo": 1500, "moves": [{"Move": "c2c4", "Centipawn": -49, "Mate": null}, {"Move": "d2d3", "Centipawn": -76, "Mate": null}, {"Move": "e2e4", "Centipawn": -78, "Mate": null}, {"Move": "f1g2", "Centipawn": -79, "Mate": null}, {"Move": "b1c3", "Centipawn": -85, "Mate": null}], "wdl": [0, 865, 135], "params": {"Debug Log File": "", "Contempt": 0, "Min Split Depth": 0, "Ponder": "false", "MultiPV": 1, "Skill Level": 20, "Move Overhead": 10, "Minimum Thinking Time": 20, "Slow Mover": 100, "UCI_Chess960": "false", "UCI_LimitStrength": "true", "UCI_Elo": 1500, "Threads": 1, "Hash": 16}, "ver": 16}'''
             print(resp)
             with open(res_log,'w') as f:
               f.write(json.dumps(resp))
